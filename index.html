@@ -4,698 +4,497 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PayTrack — Ravi Construction</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --bg:#0a0a0f; --surface:#111118; --surface2:#1a1a24; --border:#2a2a3a;
-  --accent:#7c6af7; --accent2:#f7c46a; --green:#4ecb84; --red:#f76a6a;
-  --orange:#f79a4e; --text:#e8e8f0; --muted:#6b6b8a;
-  --font:'Syne',sans-serif; --mono:'JetBrains Mono',monospace;
+body{
+  font-family:Arial,sans-serif;
+  background:#111;
+  color:#fff;
+  margin:0;
+  padding:20px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,106,247,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,106,247,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-.container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
-header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:28px;}
-.header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
-.logo{display:flex;align-items:center;gap:12px;}
-.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),#a78bfa);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;}
-.logo-text h1{font-size:21px;font-weight:800;letter-spacing:-0.5px;}
-.logo-text span{font-size:11px;color:var(--muted);font-family:var(--mono);}
-.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-#sync-status{font-size:11px;font-family:var(--mono);}
-.btn-add{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all 0.2s;}
-.btn-add:hover{background:#8b7bf8;transform:translateY(-1px);}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:border-color 0.2s;}
-.stat-card:hover{border-color:var(--accent);}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
-.stat-card.total::before{background:var(--accent);}
-.stat-card.pending::before{background:var(--orange);}
-.stat-card.paid::before{background:var(--green);}
-.stat-card.overdue::before{background:var(--red);}
-.stat-label{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
-.stat-value{font-size:24px;font-weight:800;letter-spacing:-1px;}
-.stat-sub{font-size:11px;color:var(--muted);margin-top:3px;font-family:var(--mono);}
-.reminders-section{margin-bottom:28px;}
-.reminders-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.reminders-title{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--muted);display:flex;align-items:center;gap:8px;}
-.bell{font-size:15px;animation:bellRing 2.5s ease infinite;transform-origin:top center;display:inline-block;}
-@keyframes bellRing{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(14deg)}90%{transform:rotate(-12deg)}95%{transform:rotate(8deg)}}
-.bell-badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--red);color:#fff;border-radius:50%;font-size:10px;font-weight:700;font-family:var(--mono);animation:pulse 1.5s ease infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(247,106,106,0.5)}50%{box-shadow:0 0 0 6px rgba(247,106,106,0)}}
-.reminder-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:11px;border:1px solid;margin-bottom:8px;position:relative;overflow:hidden;transition:transform 0.2s;}
-.reminder-item:hover{transform:translateX(3px);}
-.reminder-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
-.urgency-overdue{background:rgba(247,106,106,0.06);border-color:rgba(247,106,106,0.3);}
-.urgency-overdue::before{background:var(--red);}
-.urgency-today{background:rgba(247,154,78,0.08);border-color:rgba(247,154,78,0.35);}
-.urgency-today::before{background:var(--orange);}
-.urgency-soon{background:rgba(124,106,247,0.06);border-color:rgba(124,106,247,0.25);}
-.urgency-soon::before{background:var(--accent);}
-.reminder-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center;}
-.reminder-body{flex:1;min-width:0;}
-.reminder-body strong{font-size:13px;font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.reminder-desc{font-size:11px;font-family:var(--mono);margin-top:2px;}
-.urgency-overdue .reminder-desc{color:var(--red);}
-.urgency-today .reminder-desc{color:var(--orange);}
-.urgency-soon .reminder-desc{color:var(--accent);}
-.reminder-amt{font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0;}
-.urgency-overdue .reminder-amt{color:var(--red);}
-.urgency-today .reminder-amt{color:var(--orange);}
-.reminder-pay-btn{flex-shrink:0;padding:5px 11px;border-radius:7px;border:none;font-family:var(--font);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.urgency-overdue .reminder-pay-btn{background:var(--red);color:#fff;}
-.urgency-today .reminder-pay-btn{background:var(--orange);color:#fff;}
-.urgency-soon .reminder-pay-btn{background:var(--accent);color:#fff;}
-.no-reminders{text-align:center;padding:22px;background:var(--surface);border:1px solid var(--border);border-radius:11px;color:var(--green);font-family:var(--mono);font-size:12px;}
-.filters{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
-.filter-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;}
-.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-.filter-btn:hover:not(.active){border-color:var(--accent);color:var(--text);}
-.search-bar{position:relative;margin-bottom:20px;}
-.search-bar input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px 11px 42px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color 0.2s;}
-.search-bar input:focus{border-color:var(--accent);}
-.search-bar input::placeholder{color:var(--muted);}
-.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
-.payments-list{display:flex;flex-direction:column;gap:10px;}
-.payment-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px 22px;display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:14px;transition:all 0.2s;animation:slideIn 0.3s ease;}
-@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-.payment-card:hover{border-color:var(--accent);background:var(--surface2);}
-.payment-info h3{font-size:14px;font-weight:700;margin-bottom:4px;}
-.payment-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.payment-category{font-size:10px;padding:3px 7px;border-radius:5px;font-family:var(--mono);font-weight:500;background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
-.payment-date{font-size:11px;color:var(--muted);font-family:var(--mono);}
-.payment-notes{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic;}
-.payment-amount{font-family:var(--mono);font-size:17px;font-weight:600;text-align:right;min-width:100px;}
-.paid-amt{color:var(--green);}
-.pending-amt{color:var(--orange);}
-.overdue-amt{color:var(--red);}
-.status-badge{padding:5px 10px;border-radius:20px;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.5px;min-width:76px;text-align:center;}
-.status-paid{background:rgba(78,203,132,0.15);color:var(--green);border:1px solid rgba(78,203,132,0.3);}
-.status-pending{background:rgba(247,154,78,0.15);color:var(--orange);border:1px solid rgba(247,154,78,0.3);}
-.status-overdue{background:rgba(247,106,106,0.15);color:var(--red);border:1px solid rgba(247,106,106,0.3);}
-.card-actions{display:flex;gap:7px;}
-.action-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.2s;}
-.action-btn:hover{border-color:var(--accent);color:var(--accent);}
-.action-btn.delete:hover{border-color:var(--red);color:var(--red);}
-.action-btn.mark-paid:hover{border-color:var(--green);color:var(--green);}
-.paid-method{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--green);font-family:var(--mono);background:rgba(78,203,132,0.08);padding:3px 7px;border-radius:5px;margin-top:3px;}
-.recurring-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent2);margin-right:4px;vertical-align:middle;}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;width:100%;max-width:490px;animation:modalIn 0.22s ease;}
-@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal h2{font-size:18px;font-weight:800;margin-bottom:4px;}
-.autosave-note{font-size:11px;font-family:var(--mono);color:var(--green);margin-bottom:18px;display:flex;align-items:center;gap:6px;}
-.autosave-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease infinite;flex-shrink:0;}
-.form-group{margin-bottom:14px;}
-.form-group label{display:block;font-size:11px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;}
-.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:11px 13px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color 0.2s;}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);}
-.form-group select option{background:var(--surface2);}
-.form-group textarea{resize:vertical;min-height:65px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
-.modal-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
-.autosave-inline{font-size:11px;font-family:var(--mono);color:var(--muted);display:flex;align-items:center;gap:5px;}
-.btn-done{padding:10px 24px;border-radius:9px;border:none;background:var(--green);color:#fff;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.btn-done:hover{background:#5fd492;}
-.paid-modal-inner{max-width:400px;}
-.empty-state{text-align:center;padding:70px 20px;color:var(--muted);}
-.empty-state .empty-icon{font-size:44px;margin-bottom:14px;}
-.empty-state h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:7px;}
-.empty-state p{font-size:13px;font-family:var(--mono);}
-.toast{position:fixed;bottom:22px;right:22px;background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:12px 18px;font-size:13px;font-weight:600;z-index:200;transform:translateY(80px);opacity:0;transition:all 0.3s ease;display:flex;align-items:center;gap:9px;}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.success{border-color:var(--green);}
-@media(max-width:700px){.payment-card{grid-template-columns:1fr;gap:8px;}.payment-amount{text-align:left;}.form-row{grid-template-columns:1fr;}}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+button{
+  cursor:pointer;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.add-btn{
+  background:#7c6af7;
+  color:#fff;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+}
+
+.card{
+  background:#1b1b1b;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.left h3{
+  margin:0 0 5px;
+}
+
+.small{
+  font-size:12px;
+  color:#aaa;
+}
+
+.amount{
+  text-align:right;
+}
+
+.pending{
+  color:orange;
+}
+
+.paid{
+  color:#4ecb84;
+}
+
+.overdue{
+  color:#f76a6a;
+}
+
+.actions button{
+  margin-left:5px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#222;
+  padding:20px;
+  border-radius:10px;
+  width:400px;
+}
+
+input,select,textarea{
+  width:100%;
+  margin-bottom:10px;
+  padding:10px;
+  background:#111;
+  border:1px solid #333;
+  color:#fff;
+  border-radius:6px;
+}
+
+.save-btn{
+  background:#4ecb84;
+  border:none;
+  padding:10px;
+  width:100%;
+  color:#fff;
+  border-radius:8px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:#1b1b1b;
+  padding:15px;
+  border-radius:10px;
+}
+
+@media(max-width:700px){
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .card{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .amount{
+    text-align:left;
+    margin-top:10px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
-  <header>
-    <div class="header-inner">
-      <div class="logo">
-        <div class="logo-icon">💳</div>
-        <div class="logo-text">
-          <h1>PayTrack</h1>
-          <span>Ravi Construction — Auto-Saving Tracker</span>
-        </div>
-      </div>
-      <div class="header-right">
-        <div id="sync-status"></div>
-        <button class="btn-add" onclick="openAddModal()">＋ Add Payment</button>
-      </div>
-    </div>
-  </header>
 
-  <div class="stats">
-    <div class="stat-card total">
-      <div class="stat-label">Total Tracked</div>
-      <div class="stat-value" id="stat-total">0</div>
-      <div class="stat-sub" id="stat-total-amt">₹0</div>
-    </div>
-    <div class="stat-card pending">
-      <div class="stat-label">Pending</div>
-      <div class="stat-value" id="stat-pending">0</div>
-      <div class="stat-sub" id="stat-pending-amt">₹0</div>
-    </div>
-    <div class="stat-card paid">
-      <div class="stat-label">Paid</div>
-      <div class="stat-value" id="stat-paid">0</div>
-      <div class="stat-sub" id="stat-paid-amt">₹0</div>
-    </div>
-    <div class="stat-card overdue">
-      <div class="stat-label">Overdue</div>
-      <div class="stat-value" id="stat-overdue">0</div>
-      <div class="stat-sub" id="stat-overdue-amt">₹0</div>
-    </div>
-  </div>
-
-  <div class="reminders-section">
-    <div class="reminders-header">
-      <div class="reminders-title">
-        <span class="bell">🔔</span> Reminders
-        <span class="bell-badge" id="reminder-count">0</span>
-      </div>
-    </div>
-    <div id="reminders-list"></div>
-  </div>
-
-  <div class="filters">
-    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-    <button class="filter-btn" onclick="setFilter('pending',this)">⏳ Pending</button>
-    <button class="filter-btn" onclick="setFilter('paid',this)">✅ Paid</button>
-    <button class="filter-btn" onclick="setFilter('overdue',this)">🔴 Overdue</button>
-    <button class="filter-btn" onclick="setFilter('recurring',this)">🔄 Recurring</button>
-  </div>
-
-  <div class="search-bar">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Search by name, category..." oninput="renderList()">
-  </div>
-
-  <div class="payments-list" id="payments-list"></div>
+<div class="topbar">
+  <h1>💳 PayTrack — Ravi Construction</h1>
+  <button class="add-btn" onclick="openModal()">+ Add Payment</button>
 </div>
 
-<!-- Add / Edit Modal — ZERO save buttons, every keystroke auto-saves -->
-<div class="modal-overlay" id="add-modal">
-  <div class="modal">
-    <h2 id="modal-title">➕ Add Payment</h2>
-    <div class="autosave-note">
-      <span class="autosave-dot"></span>
-      Every change saves automatically — no button needed
-    </div>
-    <div class="form-group">
-      <label>Payment Name *</label>
-      <input type="text" id="f-name" placeholder="e.g. Home Loan EMI, Cement Bill…" oninput="autoSaveForm()">
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Amount (₹) *</label>
-        <input type="number" id="f-amount" placeholder="0" oninput="autoSaveForm()">
-      </div>
-      <div class="form-group">
-        <label>Category</label>
-        <select id="f-category" onchange="autoSaveForm()">
-          <option value="Loan/EMI">Loan / EMI</option>
-          <option value="Vendor Payment">Vendor Payment</option>
-          <option value="Labour">Labour</option>
-          <option value="Material">Material</option>
-          <option value="Subscription">Subscription</option>
-          <option value="Utility">Utility</option>
-          <option value="Insurance">Insurance</option>
-          <option value="Rent">Rent</option>
-          <option value="Investment">Investment</option>
-          <option value="Credit Card">Credit Card</option>
-          <option value="Tax">Tax</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Due Date *</label>
-        <input type="date" id="f-duedate" onchange="autoSaveForm()">
-      </div>
-      <div class="form-group">
-        <label>Recurring?</label>
-        <select id="f-recurring" onchange="autoSaveForm()">
-          <option value="none">One-time</option>
-          <option value="monthly">Monthly</option>
-          <option value="quarterly">Quarterly</option>
-          <option value="yearly">Yearly</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="f-notes" placeholder="Vendor name, site reference, account…" oninput="autoSaveForm()"></textarea>
-    </div>
-    <div class="modal-footer">
-      <span class="autosave-inline" id="form-save-state">⏳ Waiting for input…</span>
-      <button class="btn-done" onclick="closeAddModal()">✅ Done</button>
-    </div>
-  </div>
+<div class="stats">
+
+<div class="stat">
+  <div>Total</div>
+  <h2 id="totalCount">0</h2>
 </div>
 
-<!-- Mark as Paid Modal — auto-saves on every field change -->
-<div class="modal-overlay" id="paid-modal">
-  <div class="modal paid-modal-inner">
-    <h2>✅ Mark as Paid</h2>
-    <div class="autosave-note">
-      <span class="autosave-dot"></span>
-      Saves automatically as you fill in each field
-    </div>
-    <div class="form-group">
-      <label>Payment Method</label>
-      <select id="p-method" onchange="autoSavePaid()">
-        <option value="UPI">UPI</option>
-        <option value="NEFT/IMPS">NEFT / IMPS</option>
-        <option value="Net Banking">Net Banking</option>
-        <option value="Debit Card">Debit Card</option>
-        <option value="Credit Card">Credit Card</option>
-        <option value="Cash">Cash</option>
-        <option value="Auto-debit">Auto-debit</option>
-        <option value="Cheque">Cheque</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Paid On</label>
-      <input type="date" id="p-date" onchange="autoSavePaid()">
-    </div>
-    <div class="form-group">
-      <label>Reference / UTR No. (optional)</label>
-      <input type="text" id="p-ref" placeholder="e.g. UTR123456789" oninput="autoSavePaid()">
-    </div>
-    <div class="modal-footer">
-      <span class="autosave-inline">🟢 Auto-saving every change</span>
-      <button class="btn-done" onclick="closeModal('paid-modal')">✅ Done</button>
-    </div>
-  </div>
+<div class="stat">
+  <div>Pending</div>
+  <h2 id="pendingCount">0</h2>
 </div>
 
-<div class="toast" id="toast">
-  <span id="toast-icon">✅</span>
-  <span id="toast-msg">Saved!</span>
+<div class="stat">
+  <div>Paid</div>
+  <h2 id="paidCount">0</h2>
+</div>
+
+<div class="stat">
+  <div>Overdue</div>
+  <h2 id="overdueCount">0</h2>
+</div>
+
+</div>
+
+<div id="list"></div>
+
+</div>
+
+<!-- ADD PAYMENT MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-content">
+
+<h2>Add Payment</h2>
+
+<input id="name" placeholder="Payment Name">
+
+<input id="amount" type="number" placeholder="Amount">
+
+<select id="category">
+<option>Utility</option>
+<option>Loan/EMI</option>
+<option>Material</option>
+<option>Labour</option>
+<option>Other</option>
+</select>
+
+<input id="dueDate" type="date">
+
+<textarea id="notes" placeholder="Notes"></textarea>
+
+<button class="save-btn" onclick="savePayment()">Save Payment</button>
+
+</div>
+</div>
+
+<!-- PAY MODAL -->
+
+<div class="modal" id="payModal">
+
+<div class="modal-content">
+
+<h2>Pay Amount</h2>
+
+<input id="payAmount" type="number" placeholder="Amount Paid">
+
+<select id="payMethod">
+<option>UPI</option>
+<option>Cash</option>
+<option>Bank Transfer</option>
+<option>Cheque</option>
+</select>
+
+<input id="payDate" type="date">
+
+<input id="payRef" placeholder="Reference">
+
+<button class="save-btn" onclick="savePaid()">Save Payment</button>
+
+</div>
 </div>
 
 <script>
+
 const STORAGE_KEY = 'paytrack_ravi';
-const SHEET_API   = 'https://script.google.com/macros/s/AKfycbzwe-PopGUv6Yrgg7gtparJEMuAy_matGqQt9uDxv279KT6szhPBSZbLx_rLg3jTxu5YQ/exec';
 
 let payments = [];
-let currentFilter = 'all';
-let editingId = null;
-let markingPaidId = null;
-let syncTimer = null;
-let draftId = null; // tracks the in-progress new record
-
-/* ══════════════════════════════════════
-   LOAD — Sheet first, localStorage fallback
-══════════════════════════════════════ */
-async function load() {
-  document.getElementById('payments-list').innerHTML =
-    '<div class="empty-state"><div class="empty-icon" style="animation:spin 1s linear infinite;display:inline-block">⏳</div><h3>Loading from Google Sheet…</h3><p>Fetching your data</p></div>';
-  try {
-    const res  = await fetch(SHEET_API + '?t=' + Date.now());
-    const data = await res.json();
-    if (data.payments && data.payments.length > 0) {
-      payments = data.payments.map(normalise);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payments));
-      showToast('📊', 'Loaded from Google Sheet!', true);
-    } else {
-      loadLocal();
-    }
-  } catch(e) {
-    loadLocal();
-    showToast('⚠️', 'Offline — using local data', false);
-  }
-  renderAll();
-}
-
-function loadLocal() {
-  try {
-    const s = localStorage.getItem(STORAGE_KEY);
-    payments = s ? JSON.parse(s) : sampleData();
-  } catch(e) { payments = sampleData(); }
-}
-
-function normalise(p) {
-  return {
-    id:         String(p.id || uid()),
-    name:       String(p.name || ''),
-    amount:     Number(p.amount) || 0,
-    category:   String(p.category || 'Other'),
-    dueDate:    String(p.dueDate || ''),
-    recurring:  String(p.recurring || 'none'),
-    status:     String(p.status || 'pending'),
-    notes:      String(p.notes || ''),
-    paidMethod: p.paidMethod || null,
-    paidDate:   p.paidDate   || null,
-    paidRef:    p.paidRef    || null,
-  };
-}
-
-/* ══════════════════════════════════════
-   PERSIST — save to localStorage instantly,
-             push to Sheet after 1.2s idle
-══════════════════════════════════════ */
-function persist() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(payments));
-  setSyncStatus('pending');
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(pushToSheet, 1200);
-}
-
-async function pushToSheet() {
-  setSyncStatus('syncing');
-
-  try {
-
-    const res = await fetch(SHEET_API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8',
-      },
-      body: JSON.stringify({
-        action: 'sync',
-        payments: payments
-      }),
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      setSyncStatus('ok');
-    } else {
-      console.error(data);
-      setSyncStatus('err');
-    }
-
-  } catch(e) {
-    console.error(e);
-    setSyncStatus('err');
-  }
-}
-
-function setSyncStatus(s) {
-  const el = document.getElementById('sync-status');
-  if (!el) return;
-  const map = {
-    pending: ['🟡', 'Saving…',        'var(--accent2)'],
-    syncing: ['🔄', 'Syncing…',       'var(--accent2)'],
-    ok:      ['🟢', 'Saved to Sheet', 'var(--green)'],
-    err:     ['🔴', 'Sync failed',    'var(--red)'],
-  };
-  const [icon, txt, col] = map[s];
-  el.innerHTML = `<span style="color:${col};display:flex;align-items:center;gap:5px">${icon} ${txt}</span>`;
-}
-
-/* ══════════════════════════════════════
-   AUTO-SAVE FORM
-   Fires on EVERY keystroke / dropdown change
-   Creates or updates the record silently
-══════════════════════════════════════ */
-function autoSaveForm() {
-  const name    = document.getElementById('f-name').value.trim();
-  const amount  = parseFloat(document.getElementById('f-amount').value);
-  const dueDate = document.getElementById('f-duedate').value;
-  const stateEl = document.getElementById('form-save-state');
-
-  // Need at minimum a name to save
-  if (!name) {
-    if (stateEl) stateEl.textContent = '⏳ Start typing a name…';
-    return;
-  }
-
-  const data = {
-    name,
-    amount:    isNaN(amount) ? 0 : amount,
-    category:  document.getElementById('f-category').value,
-    dueDate:   dueDate || today(),
-    recurring: document.getElementById('f-recurring').value,
-    notes:     document.getElementById('f-notes').value.trim(),
-  };
-
-  if (editingId) {
-    // Editing existing record
-    const idx = payments.findIndex(p => p.id === editingId);
-    if (idx !== -1) payments[idx] = { ...payments[idx], ...data };
-  } else {
-    // New record — create once, update on subsequent keystrokes
-    if (draftId) {
-      const idx = payments.findIndex(p => p.id === draftId);
-      if (idx !== -1) payments[idx] = { ...payments[idx], ...data };
-    } else {
-      draftId = uid();
-      payments.unshift({ id: draftId, ...data, status: 'pending', paidMethod: null, paidDate: null, paidRef: null });
-      editingId = draftId; // keep further edits updating same record
-    }
-  }
-
-  persist();
-  renderAll();
-  if (stateEl) stateEl.innerHTML = '<span style="color:var(--green)">🟢 Saved!</span>';
-}
-
-/* ══════════════════════════════════════
-   AUTO-SAVE PAID MODAL
-   Fires on every field change inside the modal
-══════════════════════════════════════ */
-function autoSavePaid() {
-  const p = payments.find(x => x.id === markingPaidId);
-  if (!p) return;
-  p.status     = 'paid';
-  p.paidMethod = document.getElementById('p-method').value;
-  p.paidDate   = document.getElementById('p-date').value || today();
-  p.paidRef    = document.getElementById('p-ref').value.trim();
-  persist();
-  renderAll();
-  showToast('✅', p.name + ' marked paid!', true);
-}
-
-/* ══════════════════════════════════════
-   RENDER
-══════════════════════════════════════ */
-function renderAll() { renderStats(); renderReminders(); renderList(); }
-
-function renderStats() {
-  const pending = payments.filter(p => getStatus(p) === 'pending');
-  const paid    = payments.filter(p => getStatus(p) === 'paid');
-  const overdue = payments.filter(p => getStatus(p) === 'overdue');
-  const sum = arr => arr.reduce((a, b) => a + Number(b.amount), 0);
-  set('stat-total',        payments.length);
-  set('stat-total-amt',    fmt(sum(payments)));
-  set('stat-pending',      pending.length);
-  set('stat-pending-amt',  fmt(sum(pending)));
-  set('stat-paid',         paid.length);
-  set('stat-paid-amt',     fmt(sum(paid)));
-  set('stat-overdue',      overdue.length);
-  set('stat-overdue-amt',  fmt(sum(overdue)));
-}
-
-function renderReminders() {
-  const today0 = new Date(); today0.setHours(0,0,0,0);
-  const items = payments
-    .filter(p => getStatus(p) !== 'paid')
-    .map(p => {
-      const due  = new Date(p.dueDate + 'T00:00:00');
-      const diff = Math.round((due - today0) / 86400000);
-      let urgency, icon, desc;
-      if      (diff < 0)   { urgency = 'overdue'; icon = '🚨'; desc = `Overdue by ${Math.abs(diff)} day${Math.abs(diff)>1?'s':''}!`; }
-      else if (diff === 0) { urgency = 'today';   icon = '⚡'; desc = 'Due TODAY!'; }
-      else if (diff <= 7)  { urgency = 'soon';    icon = '⏰'; desc = `Due in ${diff} day${diff>1?'s':''}`; }
-      else return null;
-      return { p, urgency, icon, desc };
-    })
-    .filter(Boolean)
-    .sort((a,b) => ({'overdue':0,'today':1,'soon':2}[a.urgency]) - ({'overdue':0,'today':1,'soon':2}[b.urgency]));
-
-  set('reminder-count', items.length);
-  const el = document.getElementById('reminders-list');
-  if (!items.length) {
-    el.innerHTML = '<div class="no-reminders">✅ &nbsp;All clear — no payments due within 7 days.</div>';
-    return;
-  }
-  el.innerHTML = items.map(({ p, urgency, icon, desc }) => `
-    <div class="reminder-item urgency-${urgency}">
-      <div class="reminder-icon">${icon}</div>
-      <div class="reminder-body">
-        <strong>${esc(p.name)}</strong>
-        <div class="reminder-desc">${desc} &nbsp;·&nbsp; ${fmtDate(p.dueDate)}</div>
-      </div>
-      <div class="reminder-amt">${fmt(p.amount)}</div>
-      <button class="reminder-pay-btn" onclick="openPaidModal('${p.id}')">Pay Now</button>
-    </div>`).join('');
-}
-
-function renderList() {
-  const search = document.getElementById('search-input').value.toLowerCase();
-  let list = payments.filter(p => {
-    const st = getStatus(p);
-    if (currentFilter === 'pending'   && st !== 'pending')       return false;
-    if (currentFilter === 'paid'      && st !== 'paid')          return false;
-    if (currentFilter === 'overdue'   && st !== 'overdue')       return false;
-    if (currentFilter === 'recurring' && p.recurring === 'none') return false;
-    if (search && !p.name.toLowerCase().includes(search) && !p.category.toLowerCase().includes(search)) return false;
-    return true;
-  }).sort((a,b) => {
-    const o = { overdue:0, pending:1, paid:2 };
-    const sa = getStatus(a), sb = getStatus(b);
-    if (o[sa] !== o[sb]) return o[sa] - o[sb];
-    return new Date(a.dueDate) - new Date(b.dueDate);
-  });
-
-  const el = document.getElementById('payments-list');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><h3>No results</h3><p>Adjust filter or search</p></div>';
-    return;
-  }
-  el.innerHTML = list.map(p => {
-    const st       = getStatus(p);
-    const amtCls   = st === 'paid' ? 'paid-amt' : st === 'overdue' ? 'overdue-amt' : 'pending-amt';
-    const recurring= p.recurring !== 'none' ? `<span class="recurring-dot"></span><span class="payment-category">${p.recurring}</span>` : '';
-    const paidInfo = st === 'paid' && p.paidMethod ? `<div class="paid-method">✅ ${p.paidMethod}${p.paidRef?' · '+p.paidRef:''} · ${fmtDate(p.paidDate)}</div>` : '';
-    const notes    = p.notes ? `<div class="payment-notes">${esc(p.notes)}</div>` : '';
-    const markBtn  = st !== 'paid' ? `<button class="action-btn mark-paid" title="Mark Paid" onclick="openPaidModal('${p.id}')">✅</button>` : '';
-    return `<div class="payment-card">
-      <div class="payment-info">
-        <h3>${esc(p.name)}</h3>
-        <div class="payment-meta">
-          <span class="payment-category">${p.category}</span>${recurring}
-          <span class="payment-date">Due: ${fmtDate(p.dueDate)}</span>
-        </div>${notes}${paidInfo}
-      </div>
-      <div class="payment-amount ${amtCls}">${fmt(p.amount)}</div>
-      <div class="status-badge status-${st}">${st[0].toUpperCase()+st.slice(1)}</div>
-      <div class="card-actions">
-        ${markBtn}
-        <button class="action-btn" title="Edit" onclick="openEditModal('${p.id}')">✏️</button>
-        <button class="action-btn delete" title="Delete" onclick="delPayment('${p.id}')">🗑️</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* ══════════════════════════════════════
-   MODAL CONTROLS
-══════════════════════════════════════ */
-function openAddModal() {
-  editingId = null; draftId = null;
-  set('modal-title', '➕ Add Payment');
-  document.getElementById('f-name').value      = '';
-  document.getElementById('f-amount').value    = '';
-  document.getElementById('f-category').value  = 'Loan/EMI';
-  document.getElementById('f-duedate').value   = today();
-  document.getElementById('f-recurring').value = 'none';
-  document.getElementById('f-notes').value     = '';
-  const stateEl = document.getElementById('form-save-state');
-  if (stateEl) stateEl.textContent = '⏳ Start typing a name…';
-  document.getElementById('add-modal').classList.add('open');
-  setTimeout(() => document.getElementById('f-name').focus(), 120);
-}
-
-function openEditModal(id) {
-  const p = payments.find(x => x.id === id);
-  if (!p) return;
-  editingId = id; draftId = null;
-  set('modal-title', '✏️ Edit Payment');
-  document.getElementById('f-name').value      = p.name;
-  document.getElementById('f-amount').value    = p.amount;
-  document.getElementById('f-category').value  = p.category;
-  document.getElementById('f-duedate').value   = p.dueDate;
-  document.getElementById('f-recurring').value = p.recurring;
-  document.getElementById('f-notes').value     = p.notes || '';
-  const stateEl = document.getElementById('form-save-state');
-  if (stateEl) stateEl.innerHTML = '<span style="color:var(--green)">🟢 Saved!</span>';
-  document.getElementById('add-modal').classList.add('open');
-}
-
-function closeAddModal() {
-  // Remove empty drafts (name still blank when closed)
-  if (draftId) {
-    const rec = payments.find(p => p.id === draftId);
-    if (rec && !rec.name.trim()) {
-      payments = payments.filter(p => p.id !== draftId);
-      renderAll();
-    }
-  }
-  document.getElementById('add-modal').classList.remove('open');
-  editingId = null; draftId = null;
-}
-
-function openPaidModal(id) {
-  markingPaidId = id;
-  const p = payments.find(x => x.id === id);
-  document.getElementById('p-method').value = p && p.paidMethod ? p.paidMethod : 'UPI';
-  document.getElementById('p-date').value   = p && p.paidDate   ? p.paidDate   : today();
-  document.getElementById('p-ref').value    = p && p.paidRef    ? p.paidRef    : '';
-  document.getElementById('paid-modal').classList.add('open');
-  // Auto-trigger save so selecting the modal itself marks it paid
-  autoSavePaid();
-}
-
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-function delPayment(id) {
-  if (!confirm('Delete this payment?')) return;
-  payments = payments.filter(p => p.id !== id);
-  persist(); renderAll();
-  showToast('🗑️', 'Deleted', false);
-}
-
-function setFilter(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderList();
-}
-
-/* ══════════════════════════════════════
-   HELPERS
-══════════════════════════════════════ */
-function getStatus(p) {
-  if (p.status === 'paid') return 'paid';
-  const t = new Date(); t.setHours(0,0,0,0);
-  return new Date(p.dueDate + 'T00:00:00') < t ? 'overdue' : 'pending';
-}
-function fmt(n)     { return '₹' + Number(n).toLocaleString('en-IN'); }
-function fmtDate(s) { if (!s) return '—'; return new Date(s + 'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
-function today()    { return new Date().toISOString().split('T')[0]; }
-function uid()      { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function esc(s)     { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function set(id,v)  { const el=document.getElementById(id); if(el) el.textContent=v; }
-
-function showToast(icon, msg, success) {
-  const t = document.getElementById('toast');
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-msg').textContent  = msg;
-  t.className = 'toast show' + (success ? ' success' : '');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-function sampleData() {
-  const f = n => { const d=new Date(); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0]; };
-  const p = n => { const d=new Date(); d.setDate(d.getDate()-n); return d.toISOString().split('T')[0]; };
-  return [
-    { id:uid(), name:'Home Loan EMI',   amount:32000, category:'Loan/EMI',      dueDate:f(5),  recurring:'monthly',  status:'pending', notes:'Federal Bank',          paidMethod:null, paidDate:null, paidRef:null },
-    { id:uid(), name:'Cement Bill',     amount:85000, category:'Material',       dueDate:f(2),  recurring:'none',     status:'pending', notes:'Shri Ram Cement Store', paidMethod:null, paidDate:null, paidRef:null },
-    { id:uid(), name:'Labour Payment',  amount:45000, category:'Labour',         dueDate:p(3),  recurring:'monthly',  status:'overdue', notes:'Site A workers',        paidMethod:null, paidDate:null, paidRef:null },
-    { id:uid(), name:'Electricity Bill',amount:2200,  category:'Utility',        dueDate:p(10), recurring:'monthly',  status:'paid',    notes:'',                      paidMethod:'UPI', paidDate:p(11), paidRef:'UTR9876543210' },
-  ];
-}
-
-/* Close modal on overlay click */
-document.querySelectorAll('.modal-overlay').forEach(o =>
-  o.addEventListener('click', e => {
-    if (e.target !== o) return;
-    if (o.id === 'add-modal') closeAddModal();
-    else closeModal(o.id);
-  })
-);
+let currentPayId = null;
 
 load();
+
+function uid(){
+  return Date.now().toString(36);
+}
+
+function today(){
+  return new Date().toISOString().split('T')[0];
+}
+
+function load(){
+
+  const saved = localStorage.getItem(STORAGE_KEY);
+
+  if(saved){
+    payments = JSON.parse(saved);
+  } else {
+
+    payments = [
+      {
+        id:uid(),
+        name:'Electricity Bill',
+        amount:2000,
+        paidAmount:1000,
+        remaining:1000,
+        category:'Utility',
+        dueDate:today(),
+        status:'pending',
+        notes:'Office',
+        paidMethod:'UPI',
+        paidDate:today(),
+        paidRef:'ABC123'
+      }
+    ];
+  }
+
+  render();
+}
+
+function persist(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payments));
+}
+
+function render(){
+
+  const list = document.getElementById('list');
+
+  let total = 0;
+  let pending = 0;
+  let paid = 0;
+  let overdue = 0;
+
+  list.innerHTML = '';
+
+  payments.forEach(p => {
+
+    total++;
+
+    if(p.status === 'paid'){
+      paid++;
+    } else {
+
+      const due = new Date(p.dueDate);
+      const now = new Date();
+
+      if(due < now){
+        overdue++;
+      } else {
+        pending++;
+      }
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <div class="left">
+        <h3>${p.name}</h3>
+
+        <div class="small">
+          ${p.category} • Due ${p.dueDate}
+        </div>
+
+        <div class="small">
+          Paid ₹${p.paidAmount || 0}
+          /
+          ₹${p.amount}
+        </div>
+      </div>
+
+      <div class="amount">
+
+        <div class="${
+          p.status === 'paid'
+          ? 'paid'
+          : p.remaining > 0
+          ? 'pending'
+          : 'paid'
+        }">
+
+          ₹${p.remaining}
+
+        </div>
+
+        <div class="actions">
+
+          <button onclick="openPay('${p.id}')">
+            Pay
+          </button>
+
+          <button onclick="deletePayment('${p.id}')">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+    list.appendChild(card);
+
+  });
+
+  document.getElementById('totalCount').innerText = total;
+  document.getElementById('pendingCount').innerText = pending;
+  document.getElementById('paidCount').innerText = paid;
+  document.getElementById('overdueCount').innerText = overdue;
+
+}
+
+function openModal(){
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display = 'none';
+}
+
+function savePayment(){
+
+  const payment = {
+
+    id:uid(),
+
+    name:document.getElementById('name').value,
+
+    amount:Number(document.getElementById('amount').value),
+
+    paidAmount:0,
+
+    remaining:Number(document.getElementById('amount').value),
+
+    category:document.getElementById('category').value,
+
+    dueDate:document.getElementById('dueDate').value,
+
+    status:'pending',
+
+    notes:document.getElementById('notes').value,
+
+    paidMethod:null,
+
+    paidDate:null,
+
+    paidRef:null
+
+  };
+
+  payments.unshift(payment);
+
+  persist();
+
+  render();
+
+  closeModal();
+
+}
+
+function openPay(id){
+
+  currentPayId = id;
+
+  document.getElementById('payDate').value = today();
+
+  document.getElementById('payModal').style.display = 'flex';
+
+}
+
+function savePaid(){
+
+  const p = payments.find(x => x.id === currentPayId);
+
+  if(!p) return;
+
+  const amt =
+    Number(document.getElementById('payAmount').value);
+
+  p.paidAmount += amt;
+
+  if(p.paidAmount > p.amount){
+    p.paidAmount = p.amount;
+  }
+
+  p.remaining = p.amount - p.paidAmount;
+
+  if(p.remaining <= 0){
+    p.status = 'paid';
+  }
+
+  p.paidMethod =
+    document.getElementById('payMethod').value;
+
+  p.paidDate =
+    document.getElementById('payDate').value;
+
+  p.paidRef =
+    document.getElementById('payRef').value;
+
+  persist();
+
+  render();
+
+  document.getElementById('payModal').style.display = 'none';
+
+}
+
+function deletePayment(id){
+
+  payments = payments.filter(p => p.id !== id);
+
+  persist();
+
+  render();
+
+}
+
+window.onclick = function(e){
+
+  if(e.target.id === 'modal'){
+    closeModal();
+  }
+
+  if(e.target.id === 'payModal'){
+    document.getElementById('payModal').style.display = 'none';
+  }
+
+}
+
 </script>
+
 </body>
 </html>
