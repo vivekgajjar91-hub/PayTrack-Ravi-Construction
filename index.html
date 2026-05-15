@@ -26,17 +26,20 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 #sync-status{font-size:11px;font-family:var(--mono);}
 .btn-add{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all 0.2s;}
 .btn-add:hover{background:#8b7bf8;transform:translateY(-1px);}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px;}
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px;}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:border-color 0.2s;}
 .stat-card:hover{border-color:var(--accent);}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
 .stat-card.total::before{background:var(--accent);}
 .stat-card.pending::before{background:var(--orange);}
+.stat-card.partial-stat::before{background:#a78bfa;}
 .stat-card.paid::before{background:var(--green);}
 .stat-card.overdue::before{background:var(--red);}
 .stat-label{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
 .stat-value{font-size:24px;font-weight:800;letter-spacing:-1px;}
 .stat-sub{font-size:11px;color:var(--muted);margin-top:3px;font-family:var(--mono);}
+/* Reminders */
 .reminders-section{margin-bottom:28px;}
 .reminders-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .reminders-title{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--muted);display:flex;align-items:center;gap:8px;}
@@ -60,7 +63,7 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .urgency-overdue .reminder-desc{color:var(--red);}
 .urgency-today .reminder-desc{color:var(--orange);}
 .urgency-soon .reminder-desc{color:var(--accent);}
-.reminder-amt{font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0;}
+.reminder-amt{font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0;text-align:right;}
 .urgency-overdue .reminder-amt{color:var(--red);}
 .urgency-today .reminder-amt{color:var(--orange);}
 .reminder-pay-btn{flex-shrink:0;padding:5px 11px;border-radius:7px;border:none;font-family:var(--font);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.2s;}
@@ -68,6 +71,7 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .urgency-today .reminder-pay-btn{background:var(--orange);color:#fff;}
 .urgency-soon .reminder-pay-btn{background:var(--accent);color:#fff;}
 .no-reminders{text-align:center;padding:22px;background:var(--surface);border:1px solid var(--border);border-radius:11px;color:var(--green);font-family:var(--mono);font-size:12px;}
+/* Filters */
 .filters{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
 .filter-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;}
 .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
@@ -77,8 +81,9 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .search-bar input:focus{border-color:var(--accent);}
 .search-bar input::placeholder{color:var(--muted);}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
+/* Cards */
 .payments-list{display:flex;flex-direction:column;gap:10px;}
-.payment-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px 22px;display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:14px;transition:all 0.2s;animation:slideIn 0.3s ease;}
+.payment-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:18px 22px;display:grid;grid-template-columns:1fr auto auto auto;align-items:start;gap:14px;transition:all 0.2s;animation:slideIn 0.3s ease;}
 @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .payment-card:hover{border-color:var(--accent);background:var(--surface2);}
@@ -91,10 +96,12 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .paid-amt{color:var(--green);}
 .pending-amt{color:var(--orange);}
 .overdue-amt{color:var(--red);}
-.status-badge{padding:5px 10px;border-radius:20px;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.5px;min-width:76px;text-align:center;}
+.partial-amt{color:#a78bfa;}
+.status-badge{padding:5px 10px;border-radius:20px;font-size:10px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.5px;min-width:76px;text-align:center;white-space:nowrap;}
 .status-paid{background:rgba(78,203,132,0.15);color:var(--green);border:1px solid rgba(78,203,132,0.3);}
 .status-pending{background:rgba(247,154,78,0.15);color:var(--orange);border:1px solid rgba(247,154,78,0.3);}
 .status-overdue{background:rgba(247,106,106,0.15);color:var(--red);border:1px solid rgba(247,106,106,0.3);}
+.status-partial{background:rgba(167,139,250,0.15);color:#a78bfa;border:1px solid rgba(167,139,250,0.35);}
 .card-actions{display:flex;gap:7px;}
 .action-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.2s;}
 .action-btn:hover{border-color:var(--accent);color:var(--accent);}
@@ -102,11 +109,42 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .action-btn.mark-paid:hover{border-color:var(--green);color:var(--green);}
 .paid-method{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--green);font-family:var(--mono);background:rgba(78,203,132,0.08);padding:3px 7px;border-radius:5px;margin-top:3px;}
 .recurring-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent2);margin-right:4px;vertical-align:middle;}
+/* Partial Progress */
+.partial-progress{margin-top:10px;}
+.progress-bar-wrap{height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.progress-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),#a78bfa);transition:width 0.6s ease;}
+.progress-labels{display:flex;justify-content:space-between;margin-top:5px;}
+.progress-paid{font-size:10px;font-family:var(--mono);color:#a78bfa;}
+.progress-remaining{font-size:10px;font-family:var(--mono);color:var(--muted);}
+.partial-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.partial-chip{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-family:var(--mono);background:rgba(124,106,247,0.1);border:1px solid rgba(124,106,247,0.22);color:#a78bfa;padding:3px 8px;border-radius:5px;}
+.partial-chip-date{color:var(--muted);}
+/* Pay Toggle */
+.pay-type-toggle{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px;margin-bottom:16px;}
+.pay-type-btn{flex:1;padding:8px 14px;border-radius:8px;border:none;background:transparent;color:var(--muted);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.pay-type-btn.active{background:var(--accent);color:#fff;}
+.pay-type-btn:not(.active):hover{color:var(--text);}
+/* Partial Amount */
+.partial-amount-section{background:rgba(124,106,247,0.05);border:1px solid rgba(124,106,247,0.22);border-radius:10px;padding:14px;margin-bottom:14px;}
+.remaining-row{display:flex;justify-content:space-between;align-items:center;margin-top:9px;padding-top:9px;border-top:1px solid var(--border);}
+.remaining-label{font-size:11px;font-family:var(--mono);color:var(--muted);}
+.remaining-value{font-size:12px;font-family:var(--mono);font-weight:700;color:var(--orange);}
+.remaining-value.zero{color:var(--green);}
+/* Partial History */
+.partial-modal-history{margin-bottom:14px;}
+.partial-modal-history-title{font-size:10px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;}
+.partial-history-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:5px;}
+.phi-amount{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green);min-width:80px;}
+.phi-details{font-family:var(--mono);font-size:10px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.phi-del{width:24px;height:24px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:all 0.2s;}
+.phi-del:hover{border-color:var(--red);color:var(--red);}
+/* Modals */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;width:100%;max-width:490px;animation:modalIn 0.22s ease;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;width:100%;max-width:490px;animation:modalIn 0.22s ease;max-height:90vh;overflow-y:auto;}
 @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .modal h2{font-size:18px;font-weight:800;margin-bottom:4px;}
+.paid-modal-summary{font-size:11px;font-family:var(--mono);color:var(--muted);margin-bottom:14px;line-height:1.7;}
 .autosave-note{font-size:11px;font-family:var(--mono);color:var(--green);margin-bottom:18px;display:flex;align-items:center;gap:6px;}
 .autosave-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease infinite;flex-shrink:0;}
 .form-group{margin-bottom:14px;}
@@ -120,7 +158,11 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .autosave-inline{font-size:11px;font-family:var(--mono);color:var(--muted);display:flex;align-items:center;gap:5px;}
 .btn-done{padding:10px 24px;border-radius:9px;border:none;background:var(--green);color:#fff;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
 .btn-done:hover{background:#5fd492;}
-.paid-modal-inner{max-width:400px;}
+.btn-ghost{padding:10px 20px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text);}
+.btn-record{padding:10px 24px;border-radius:9px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-record:hover{background:#8b7bf8;}
+.paid-modal-inner{max-width:440px;}
 .empty-state{text-align:center;padding:70px 20px;color:var(--muted);}
 .empty-state .empty-icon{font-size:44px;margin-bottom:14px;}
 .empty-state h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:7px;}
@@ -128,7 +170,12 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 .toast{position:fixed;bottom:22px;right:22px;background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:12px 18px;font-size:13px;font-weight:600;z-index:200;transform:translateY(80px);opacity:0;transition:all 0.3s ease;display:flex;align-items:center;gap:9px;}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.success{border-color:var(--green);}
-@media(max-width:700px){.payment-card{grid-template-columns:1fr;gap:8px;}.payment-amount{text-align:left;}.form-row{grid-template-columns:1fr;}}
+@media(max-width:700px){
+  .payment-card{grid-template-columns:1fr;gap:8px;}
+  .payment-amount{text-align:left;}
+  .form-row{grid-template-columns:1fr;}
+  .reminder-amt{display:none;}
+}
 </style>
 </head>
 <body>
@@ -160,6 +207,11 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
       <div class="stat-value" id="stat-pending">0</div>
       <div class="stat-sub" id="stat-pending-amt">₹0</div>
     </div>
+    <div class="stat-card partial-stat">
+      <div class="stat-label">Partial</div>
+      <div class="stat-value" id="stat-partial">0</div>
+      <div class="stat-sub" id="stat-partial-amt">₹0 left</div>
+    </div>
     <div class="stat-card paid">
       <div class="stat-label">Paid</div>
       <div class="stat-value" id="stat-paid">0</div>
@@ -185,6 +237,7 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
   <div class="filters">
     <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
     <button class="filter-btn" onclick="setFilter('pending',this)">⏳ Pending</button>
+    <button class="filter-btn" onclick="setFilter('partial',this)">🔵 Partial</button>
     <button class="filter-btn" onclick="setFilter('paid',this)">✅ Paid</button>
     <button class="filter-btn" onclick="setFilter('overdue',this)">🔴 Overdue</button>
     <button class="filter-btn" onclick="setFilter('recurring',this)">🔄 Recurring</button>
@@ -198,14 +251,11 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
   <div class="payments-list" id="payments-list"></div>
 </div>
 
-<!-- Add / Edit Modal — ZERO save buttons, every keystroke auto-saves -->
+<!-- Add / Edit Modal -->
 <div class="modal-overlay" id="add-modal">
   <div class="modal">
     <h2 id="modal-title">➕ Add Payment</h2>
-    <div class="autosave-note">
-      <span class="autosave-dot"></span>
-      Every change saves automatically — no button needed
-    </div>
+    <div class="autosave-note"><span class="autosave-dot"></span>Every change saves automatically — no button needed</div>
     <div class="form-group">
       <label>Payment Name *</label>
       <input type="text" id="f-name" placeholder="e.g. Home Loan EMI, Cement Bill…" oninput="autoSaveForm()">
@@ -259,17 +309,29 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
   </div>
 </div>
 
-<!-- Mark as Paid Modal — auto-saves on every field change -->
+<!-- Record Payment Modal (Full + Partial) -->
 <div class="modal-overlay" id="paid-modal">
   <div class="modal paid-modal-inner">
-    <h2>✅ Mark as Paid</h2>
-    <div class="autosave-note">
-      <span class="autosave-dot"></span>
-      Saves automatically as you fill in each field
+    <h2>💳 Record Payment</h2>
+    <div class="paid-modal-summary" id="paid-modal-summary"></div>
+    <div class="pay-type-toggle">
+      <button id="btn-full-pay"    class="pay-type-btn active" onclick="setPayType('full')">✅ Full Payment</button>
+      <button id="btn-partial-pay" class="pay-type-btn"        onclick="setPayType('partial')">🔵 Partial</button>
     </div>
+    <div class="partial-amount-section" id="partial-amount-section" style="display:none">
+      <div class="form-group" style="margin-bottom:0">
+        <label>Amount Paying Now (₹)</label>
+        <input type="number" id="p-partial-amount" placeholder="0" oninput="updateRemainingDisplay()">
+      </div>
+      <div class="remaining-row">
+        <span class="remaining-label">Remaining after this:</span>
+        <span class="remaining-value" id="remaining-value">—</span>
+      </div>
+    </div>
+    <div id="partial-modal-history"></div>
     <div class="form-group">
       <label>Payment Method</label>
-      <select id="p-method" onchange="autoSavePaid()">
+      <select id="p-method" onchange="onPaidFieldChange()">
         <option value="UPI">UPI</option>
         <option value="NEFT/IMPS">NEFT / IMPS</option>
         <option value="Net Banking">Net Banking</option>
@@ -280,17 +342,23 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
         <option value="Cheque">Cheque</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>Paid On</label>
-      <input type="date" id="p-date" onchange="autoSavePaid()">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="p-date" onchange="onPaidFieldChange()">
+      </div>
+      <div class="form-group">
+        <label>Reference / UTR (optional)</label>
+        <input type="text" id="p-ref" placeholder="UTR123456789" oninput="onPaidFieldChange()">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Reference / UTR No. (optional)</label>
-      <input type="text" id="p-ref" placeholder="e.g. UTR123456789" oninput="autoSavePaid()">
-    </div>
-    <div class="modal-footer">
-      <span class="autosave-inline">🟢 Auto-saving every change</span>
+    <div class="modal-footer" id="full-pay-footer">
+      <span class="autosave-inline">🟢 Auto-saves on every change</span>
       <button class="btn-done" onclick="closeModal('paid-modal')">✅ Done</button>
+    </div>
+    <div class="modal-footer" id="partial-pay-footer" style="display:none">
+      <button class="btn-ghost" onclick="closeModal('paid-modal')">Close</button>
+      <button class="btn-record" onclick="recordPartialPayment()">💰 Record Payment</button>
     </div>
   </div>
 </div>
@@ -304,16 +372,16 @@ header{padding:28px 0 18px;border-bottom:1px solid var(--border);margin-bottom:2
 const STORAGE_KEY = 'paytrack_ravi';
 const SHEET_API   = 'https://script.google.com/macros/s/AKfycbzwe-PopGUv6Yrgg7gtparJEMuAy_matGqQt9uDxv279KT6szhPBSZbLx_rLg3jTxu5YQ/exec';
 
-let payments = [];
-let currentFilter = 'all';
-let editingId = null;
-let markingPaidId = null;
-let syncTimer = null;
-let draftId = null; // tracks the in-progress new record
+let payments       = [];
+let currentFilter  = 'all';
+let editingId      = null;
+let markingPaidId  = null;
+let syncTimer      = null;
+let draftId        = null;
+let payType        = 'full';
+let originalStatus = 'pending';
 
-/* ══════════════════════════════════════
-   LOAD — Sheet first, localStorage fallback
-══════════════════════════════════════ */
+/* ── LOAD ── */
 async function load() {
   document.getElementById('payments-list').innerHTML =
     '<div class="empty-state"><div class="empty-icon" style="animation:spin 1s linear infinite;display:inline-block">⏳</div><h3>Loading from Google Sheet…</h3><p>Fetching your data</p></div>';
@@ -324,9 +392,7 @@ async function load() {
       payments = data.payments.map(normalise);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(payments));
       showToast('📊', 'Loaded from Google Sheet!', true);
-    } else {
-      loadLocal();
-    }
+    } else { loadLocal(); }
   } catch(e) {
     loadLocal();
     showToast('⚠️', 'Offline — using local data', false);
@@ -343,24 +409,22 @@ function loadLocal() {
 
 function normalise(p) {
   return {
-    id:         String(p.id || uid()),
-    name:       String(p.name || ''),
-    amount:     Number(p.amount) || 0,
-    category:   String(p.category || 'Other'),
-    dueDate:    String(p.dueDate || ''),
-    recurring:  String(p.recurring || 'none'),
-    status:     String(p.status || 'pending'),
-    notes:      String(p.notes || ''),
-    paidMethod: p.paidMethod || null,
-    paidDate:   p.paidDate   || null,
-    paidRef:    p.paidRef    || null,
+    id:              String(p.id || uid()),
+    name:            String(p.name || ''),
+    amount:          Number(p.amount) || 0,
+    category:        String(p.category || 'Other'),
+    dueDate:         String(p.dueDate || ''),
+    recurring:       String(p.recurring || 'none'),
+    status:          String(p.status || 'pending'),
+    notes:           String(p.notes || ''),
+    paidMethod:      p.paidMethod || null,
+    paidDate:        p.paidDate   || null,
+    paidRef:         p.paidRef    || null,
+    partialPayments: Array.isArray(p.partialPayments) ? p.partialPayments : [],
   };
 }
 
-/* ══════════════════════════════════════
-   PERSIST — save to localStorage instantly,
-             push to Sheet after 1.2s idle
-══════════════════════════════════════ */
+/* ── PERSIST ── */
 function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payments));
   setSyncStatus('pending');
@@ -371,146 +435,238 @@ function persist() {
 async function pushToSheet() {
   setSyncStatus('syncing');
   try {
-    const res  = await fetch(SHEET_API, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'sync', payments: payments }),
-    });
+    const res  = await fetch(SHEET_API, { method:'POST', body: JSON.stringify({ action:'sync', payments }) });
     const data = await res.json();
     setSyncStatus(data.success ? 'ok' : 'err');
-  } catch(e) {
-    setSyncStatus('err');
-  }
+  } catch(e) { setSyncStatus('err'); }
 }
 
 function setSyncStatus(s) {
   const el = document.getElementById('sync-status');
   if (!el) return;
   const map = {
-    pending: ['🟡', 'Saving…',        'var(--accent2)'],
-    syncing: ['🔄', 'Syncing…',       'var(--accent2)'],
-    ok:      ['🟢', 'Saved to Sheet', 'var(--green)'],
-    err:     ['🔴', 'Sync failed',    'var(--red)'],
+    pending: ['🟡','Saving…',        'var(--accent2)'],
+    syncing: ['🔄','Syncing…',       'var(--accent2)'],
+    ok:      ['🟢','Saved to Sheet', 'var(--green)'],
+    err:     ['🔴','Sync failed',    'var(--red)'],
   };
-  const [icon, txt, col] = map[s];
+  const [icon,txt,col] = map[s];
   el.innerHTML = `<span style="color:${col};display:flex;align-items:center;gap:5px">${icon} ${txt}</span>`;
 }
 
-/* ══════════════════════════════════════
-   AUTO-SAVE FORM
-   Fires on EVERY keystroke / dropdown change
-   Creates or updates the record silently
-══════════════════════════════════════ */
+/* ── HELPERS ── */
+function getPaidAmount(p) {
+  if (p.status === 'paid' && (!p.partialPayments || p.partialPayments.length === 0)) return p.amount;
+  if (p.partialPayments && p.partialPayments.length > 0)
+    return p.partialPayments.reduce((s, pp) => s + Number(pp.amount || 0), 0);
+  return 0;
+}
+function getStatus(p) {
+  if (p.status === 'paid') return 'paid';
+  const paid = getPaidAmount(p);
+  if (paid > 0 && paid < p.amount) return 'partial';
+  const t = new Date(); t.setHours(0,0,0,0);
+  return new Date(p.dueDate + 'T00:00:00') < t ? 'overdue' : 'pending';
+}
+function fmt(n)     { return '₹' + Number(n).toLocaleString('en-IN'); }
+function fmtDate(s) { if (!s) return '—'; return new Date(s+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function today()    { return new Date().toISOString().split('T')[0]; }
+function uid()      { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function esc(s)     { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function set(id,v)  { const el=document.getElementById(id); if(el) el.textContent=v; }
+function showToast(icon, msg, success) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-msg').textContent  = msg;
+  t.className = 'toast show' + (success ? ' success' : '');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── AUTO-SAVE FORM ── */
 function autoSaveForm() {
   const name    = document.getElementById('f-name').value.trim();
   const amount  = parseFloat(document.getElementById('f-amount').value);
-  const dueDate = document.getElementById('f-duedate').value;
   const stateEl = document.getElementById('form-save-state');
-
-  // Need at minimum a name to save
-  if (!name) {
-    if (stateEl) stateEl.textContent = '⏳ Start typing a name…';
-    return;
-  }
-
+  if (!name) { if (stateEl) stateEl.textContent = '⏳ Start typing a name…'; return; }
   const data = {
-    name,
-    amount:    isNaN(amount) ? 0 : amount,
+    name, amount: isNaN(amount) ? 0 : amount,
     category:  document.getElementById('f-category').value,
-    dueDate:   dueDate || today(),
+    dueDate:   document.getElementById('f-duedate').value || today(),
     recurring: document.getElementById('f-recurring').value,
     notes:     document.getElementById('f-notes').value.trim(),
   };
-
   if (editingId) {
-    // Editing existing record
     const idx = payments.findIndex(p => p.id === editingId);
     if (idx !== -1) payments[idx] = { ...payments[idx], ...data };
   } else {
-    // New record — create once, update on subsequent keystrokes
     if (draftId) {
       const idx = payments.findIndex(p => p.id === draftId);
       if (idx !== -1) payments[idx] = { ...payments[idx], ...data };
     } else {
       draftId = uid();
-      payments.unshift({ id: draftId, ...data, status: 'pending', paidMethod: null, paidDate: null, paidRef: null });
-      editingId = draftId; // keep further edits updating same record
+      payments.unshift({ id:draftId, ...data, status:'pending', paidMethod:null, paidDate:null, paidRef:null, partialPayments:[] });
+      editingId = draftId;
     }
   }
-
-  persist();
-  renderAll();
+  persist(); renderAll();
   if (stateEl) stateEl.innerHTML = '<span style="color:var(--green)">🟢 Saved!</span>';
 }
 
-/* ══════════════════════════════════════
-   AUTO-SAVE PAID MODAL
-   Fires on every field change inside the modal
-══════════════════════════════════════ */
+/* ── PAID MODAL ── */
+function setPayType(type) {
+  payType = type;
+  document.getElementById('btn-full-pay').classList.toggle('active', type === 'full');
+  document.getElementById('btn-partial-pay').classList.toggle('active', type === 'partial');
+  document.getElementById('partial-amount-section').style.display = type === 'partial' ? 'block' : 'none';
+  document.getElementById('full-pay-footer').style.display        = type === 'full'    ? 'flex'  : 'none';
+  document.getElementById('partial-pay-footer').style.display     = type === 'partial' ? 'flex'  : 'none';
+  if (type === 'full') {
+    autoSavePaid();
+  } else {
+    const p = payments.find(x => x.id === markingPaidId);
+    if (p && p.status === 'paid' && (!p.partialPayments || p.partialPayments.length === 0)) {
+      p.status = originalStatus; persist(); renderAll();
+    }
+    updateRemainingDisplay();
+    renderPartialModalHistory();
+  }
+}
+function onPaidFieldChange() { if (payType === 'full') autoSavePaid(); }
 function autoSavePaid() {
+  if (payType !== 'full') return;
   const p = payments.find(x => x.id === markingPaidId);
   if (!p) return;
-  p.status     = 'paid';
+  p.status = 'paid';
   p.paidMethod = document.getElementById('p-method').value;
   p.paidDate   = document.getElementById('p-date').value || today();
   p.paidRef    = document.getElementById('p-ref').value.trim();
-  persist();
-  renderAll();
+  persist(); renderAll();
   showToast('✅', p.name + ' marked paid!', true);
 }
+function updateRemainingDisplay() {
+  const p = payments.find(x => x.id === markingPaidId);
+  if (!p) return;
+  const alreadyPaid = getPaidAmount(p);
+  const entering    = parseFloat(document.getElementById('p-partial-amount').value) || 0;
+  const remaining   = p.amount - alreadyPaid - entering;
+  const el = document.getElementById('remaining-value');
+  if (el) {
+    el.textContent = remaining <= 0 ? '₹0 (fully paid! 🎉)' : fmt(Math.max(0, remaining));
+    el.className   = 'remaining-value' + (remaining <= 0 ? ' zero' : '');
+  }
+}
+function renderPartialModalHistory() {
+  const p  = payments.find(x => x.id === markingPaidId);
+  const el = document.getElementById('partial-modal-history');
+  if (!el || !p || !p.partialPayments || p.partialPayments.length === 0) { if (el) el.innerHTML = ''; return; }
+  const totalPaid = p.partialPayments.reduce((s, pp) => s + Number(pp.amount || 0), 0);
+  el.innerHTML = `<div class="partial-modal-history">
+    <div class="partial-modal-history-title">
+      <span>📋 Payment History</span>
+      <span style="color:var(--accent)">${fmt(totalPaid)} paid of ${fmt(p.amount)}</span>
+    </div>
+    ${p.partialPayments.map(pp => `
+      <div class="partial-history-item">
+        <div class="phi-amount">${fmt(pp.amount)}</div>
+        <div class="phi-details">${esc(pp.method)}${pp.ref?' · '+esc(pp.ref):''} · ${fmtDate(pp.date)}</div>
+        <button class="phi-del" onclick="deletePartialEntry('${pp.id}')" title="Remove">🗑</button>
+      </div>`).join('')}
+  </div>`;
+}
+function recordPartialPayment() {
+  const p = payments.find(x => x.id === markingPaidId);
+  if (!p) return;
+  const amt = parseFloat(document.getElementById('p-partial-amount').value);
+  if (!amt || amt <= 0) { showToast('⚠️', 'Enter a valid amount', false); return; }
+  if (getPaidAmount(p) + amt > p.amount) { showToast('⚠️', 'Exceeds remaining balance!', false); return; }
+  const entry = { id:uid(), amount:amt, method:document.getElementById('p-method').value, date:document.getElementById('p-date').value||today(), ref:document.getElementById('p-ref').value.trim() };
+  if (!p.partialPayments) p.partialPayments = [];
+  p.partialPayments.push(entry);
+  const totalPaid = p.partialPayments.reduce((s,pp) => s + Number(pp.amount||0), 0);
+  if (totalPaid >= p.amount) {
+    p.status='paid'; p.paidMethod=entry.method; p.paidDate=entry.date; p.paidRef=entry.ref;
+    showToast('🎉', p.name + ' fully paid!', true);
+  } else {
+    if (p.status === 'paid') p.status = 'pending';
+    showToast('💰', fmt(amt) + ' recorded!', true);
+  }
+  persist(); renderAll();
+  refreshPaidModalSummary(); renderPartialModalHistory();
+  document.getElementById('p-partial-amount').value = '';
+  updateRemainingDisplay();
+}
+function deletePartialEntry(entryId) {
+  const p = payments.find(x => x.id === markingPaidId);
+  if (!p || !p.partialPayments) return;
+  p.partialPayments = p.partialPayments.filter(pp => pp.id !== entryId);
+  if (p.status === 'paid') {
+    const total = p.partialPayments.reduce((s,pp) => s + Number(pp.amount||0), 0);
+    if (total < p.amount) { p.status='pending'; p.paidMethod=null; p.paidDate=null; p.paidRef=null; }
+  }
+  persist(); renderAll();
+  refreshPaidModalSummary(); renderPartialModalHistory(); updateRemainingDisplay();
+  showToast('🗑️', 'Entry removed', false);
+}
+function refreshPaidModalSummary() {
+  const p  = payments.find(x => x.id === markingPaidId);
+  const el = document.getElementById('paid-modal-summary');
+  if (!el || !p) return;
+  const paidAmt = getPaidAmount(p), leftAmt = p.amount - paidAmt;
+  el.innerHTML = `<strong style="color:var(--text)">${esc(p.name)}</strong> &nbsp;·&nbsp; Total: ${fmt(p.amount)}` +
+    (paidAmt > 0 && p.status !== 'paid'
+      ? ` &nbsp;·&nbsp; <span style="color:#a78bfa">Paid: ${fmt(paidAmt)}</span>` +
+        (leftAmt > 0 ? ` &nbsp;·&nbsp; <span style="color:var(--orange)">Left: ${fmt(leftAmt)}</span>` : '') : '');
+}
 
-/* ══════════════════════════════════════
-   RENDER
-══════════════════════════════════════ */
+/* ── RENDER ── */
 function renderAll() { renderStats(); renderReminders(); renderList(); }
 
 function renderStats() {
   const pending = payments.filter(p => getStatus(p) === 'pending');
+  const partial = payments.filter(p => getStatus(p) === 'partial');
   const paid    = payments.filter(p => getStatus(p) === 'paid');
   const overdue = payments.filter(p => getStatus(p) === 'overdue');
-  const sum = arr => arr.reduce((a, b) => a + Number(b.amount), 0);
-  set('stat-total',        payments.length);
-  set('stat-total-amt',    fmt(sum(payments)));
-  set('stat-pending',      pending.length);
-  set('stat-pending-amt',  fmt(sum(pending)));
-  set('stat-paid',         paid.length);
-  set('stat-paid-amt',     fmt(sum(paid)));
-  set('stat-overdue',      overdue.length);
-  set('stat-overdue-amt',  fmt(sum(overdue)));
+  const sum     = arr => arr.reduce((a,b) => a + Number(b.amount), 0);
+  const partialRemaining = partial.reduce((a,b) => a + (b.amount - getPaidAmount(b)), 0);
+  set('stat-total',       payments.length);   set('stat-total-amt',   fmt(sum(payments)));
+  set('stat-pending',     pending.length);    set('stat-pending-amt', fmt(sum(pending)));
+  set('stat-partial',     partial.length);    set('stat-partial-amt', fmt(partialRemaining) + ' left');
+  set('stat-paid',        paid.length);       set('stat-paid-amt',    fmt(sum(paid)));
+  set('stat-overdue',     overdue.length);    set('stat-overdue-amt', fmt(sum(overdue)));
 }
 
 function renderReminders() {
   const today0 = new Date(); today0.setHours(0,0,0,0);
-  const items = payments
-    .filter(p => getStatus(p) !== 'paid')
-    .map(p => {
-      const due  = new Date(p.dueDate + 'T00:00:00');
-      const diff = Math.round((due - today0) / 86400000);
-      let urgency, icon, desc;
-      if      (diff < 0)   { urgency = 'overdue'; icon = '🚨'; desc = `Overdue by ${Math.abs(diff)} day${Math.abs(diff)>1?'s':''}!`; }
-      else if (diff === 0) { urgency = 'today';   icon = '⚡'; desc = 'Due TODAY!'; }
-      else if (diff <= 7)  { urgency = 'soon';    icon = '⏰'; desc = `Due in ${diff} day${diff>1?'s':''}`; }
-      else return null;
-      return { p, urgency, icon, desc };
-    })
-    .filter(Boolean)
-    .sort((a,b) => ({'overdue':0,'today':1,'soon':2}[a.urgency]) - ({'overdue':0,'today':1,'soon':2}[b.urgency]));
+  const items = payments.filter(p => getStatus(p) !== 'paid').map(p => {
+    const due  = new Date(p.dueDate+'T00:00:00');
+    const diff = Math.round((due - today0) / 86400000);
+    let urgency, icon, desc;
+    if      (diff < 0)   { urgency='overdue'; icon='🚨'; desc=`Overdue by ${Math.abs(diff)} day${Math.abs(diff)>1?'s':''}!`; }
+    else if (diff === 0) { urgency='today';   icon='⚡'; desc='Due TODAY!'; }
+    else if (diff <= 7)  { urgency='soon';    icon='⏰'; desc=`Due in ${diff} day${diff>1?'s':''}`; }
+    else return null;
+    return { p, urgency, icon, desc };
+  }).filter(Boolean).sort((a,b) => ({'overdue':0,'today':1,'soon':2}[a.urgency]) - ({'overdue':0,'today':1,'soon':2}[b.urgency]));
 
   set('reminder-count', items.length);
   const el = document.getElementById('reminders-list');
-  if (!items.length) {
-    el.innerHTML = '<div class="no-reminders">✅ &nbsp;All clear — no payments due within 7 days.</div>';
-    return;
-  }
-  el.innerHTML = items.map(({ p, urgency, icon, desc }) => `
-    <div class="reminder-item urgency-${urgency}">
+  if (!items.length) { el.innerHTML = '<div class="no-reminders">✅ &nbsp;All clear — no payments due within 7 days.</div>'; return; }
+  el.innerHTML = items.map(({ p, urgency, icon, desc }) => {
+    const paidAmt = getPaidAmount(p), leftAmt = p.amount - paidAmt;
+    const amtDisplay = paidAmt > 0
+      ? `<div style="font-size:13px;font-weight:600">${fmt(leftAmt)}</div><div style="font-size:10px;font-family:var(--mono);color:var(--muted)">${fmt(paidAmt)} paid</div>`
+      : fmt(p.amount);
+    const partialNote = paidAmt > 0 ? ` &nbsp;·&nbsp; <span style="color:#a78bfa">${fmt(paidAmt)} paid</span>` : '';
+    return `<div class="reminder-item urgency-${urgency}">
       <div class="reminder-icon">${icon}</div>
       <div class="reminder-body">
         <strong>${esc(p.name)}</strong>
-        <div class="reminder-desc">${desc} &nbsp;·&nbsp; ${fmtDate(p.dueDate)}</div>
+        <div class="reminder-desc">${desc} &nbsp;·&nbsp; ${fmtDate(p.dueDate)}${partialNote}</div>
       </div>
-      <div class="reminder-amt">${fmt(p.amount)}</div>
+      <div class="reminder-amt">${amtDisplay}</div>
       <button class="reminder-pay-btn" onclick="openPaidModal('${p.id}')">Pay Now</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderList() {
@@ -518,40 +674,56 @@ function renderList() {
   let list = payments.filter(p => {
     const st = getStatus(p);
     if (currentFilter === 'pending'   && st !== 'pending')       return false;
+    if (currentFilter === 'partial'   && st !== 'partial')       return false;
     if (currentFilter === 'paid'      && st !== 'paid')          return false;
     if (currentFilter === 'overdue'   && st !== 'overdue')       return false;
     if (currentFilter === 'recurring' && p.recurring === 'none') return false;
     if (search && !p.name.toLowerCase().includes(search) && !p.category.toLowerCase().includes(search)) return false;
     return true;
   }).sort((a,b) => {
-    const o = { overdue:0, pending:1, paid:2 };
-    const sa = getStatus(a), sb = getStatus(b);
+    const o = { overdue:0, partial:1, pending:2, paid:3 };
+    const sa=getStatus(a), sb=getStatus(b);
     if (o[sa] !== o[sb]) return o[sa] - o[sb];
     return new Date(a.dueDate) - new Date(b.dueDate);
   });
 
   const el = document.getElementById('payments-list');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><h3>No results</h3><p>Adjust filter or search</p></div>';
-    return;
-  }
+  if (!list.length) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><h3>No results</h3><p>Adjust filter or search</p></div>'; return; }
   el.innerHTML = list.map(p => {
-    const st       = getStatus(p);
-    const amtCls   = st === 'paid' ? 'paid-amt' : st === 'overdue' ? 'overdue-amt' : 'pending-amt';
-    const recurring= p.recurring !== 'none' ? `<span class="recurring-dot"></span><span class="payment-category">${p.recurring}</span>` : '';
-    const paidInfo = st === 'paid' && p.paidMethod ? `<div class="paid-method">✅ ${p.paidMethod}${p.paidRef?' · '+p.paidRef:''} · ${fmtDate(p.paidDate)}</div>` : '';
-    const notes    = p.notes ? `<div class="payment-notes">${esc(p.notes)}</div>` : '';
-    const markBtn  = st !== 'paid' ? `<button class="action-btn mark-paid" title="Mark Paid" onclick="openPaidModal('${p.id}')">✅</button>` : '';
+    const st      = getStatus(p);
+    const paidAmt = getPaidAmount(p);
+    const amtCls  = { paid:'paid-amt', pending:'pending-amt', overdue:'overdue-amt', partial:'partial-amt' }[st];
+    const recurring = p.recurring !== 'none' ? `<span class="recurring-dot"></span><span class="payment-category">${p.recurring}</span>` : '';
+    const paidInfo  = st==='paid' && p.paidMethod ? `<div class="paid-method">✅ ${esc(p.paidMethod)}${p.paidRef?' · '+esc(p.paidRef):''} · ${fmtDate(p.paidDate)}</div>` : '';
+    const notes     = p.notes ? `<div class="payment-notes">${esc(p.notes)}</div>` : '';
+    const markBtn   = st !== 'paid' ? `<button class="action-btn mark-paid" title="Record Payment" onclick="openPaidModal('${p.id}')">✅</button>` : '';
+    let partialBlock = '';
+    if (st === 'partial' && p.partialPayments && p.partialPayments.length > 0) {
+      const leftAmt = p.amount - paidAmt;
+      const pct     = Math.min(100, Math.round((paidAmt / p.amount) * 100));
+      const chips   = p.partialPayments.slice(-3).map(pp =>
+        `<span class="partial-chip">${fmt(pp.amount)} <span class="partial-chip-date">· ${fmtDate(pp.date)}</span></span>`).join('');
+      const moreChip = p.partialPayments.length > 3 ? `<span class="partial-chip">+${p.partialPayments.length - 3} more</span>` : '';
+      partialBlock = `<div class="partial-progress">
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        <div class="progress-labels">
+          <span class="progress-paid">Paid ${fmt(paidAmt)} (${pct}%)</span>
+          <span class="progress-remaining">${fmt(leftAmt)} remaining</span>
+        </div>
+        <div class="partial-chips">${chips}${moreChip}</div>
+      </div>`;
+    }
+    const leftLine = st === 'partial' ? `<div style="font-size:11px;font-family:var(--mono);color:var(--muted);margin-top:2px">${fmt(p.amount - paidAmt)} left</div>` : '';
     return `<div class="payment-card">
       <div class="payment-info">
         <h3>${esc(p.name)}</h3>
         <div class="payment-meta">
-          <span class="payment-category">${p.category}</span>${recurring}
+          <span class="payment-category">${esc(p.category)}</span>${recurring}
           <span class="payment-date">Due: ${fmtDate(p.dueDate)}</span>
-        </div>${notes}${paidInfo}
+        </div>${notes}${paidInfo}${partialBlock}
       </div>
-      <div class="payment-amount ${amtCls}">${fmt(p.amount)}</div>
-      <div class="status-badge status-${st}">${st[0].toUpperCase()+st.slice(1)}</div>
+      <div class="payment-amount ${amtCls}">${fmt(p.amount)}${leftLine}</div>
+      <div class="status-badge status-${st}">${st==='partial'?'Partial':st[0].toUpperCase()+st.slice(1)}</div>
       <div class="card-actions">
         ${markBtn}
         <button class="action-btn" title="Edit" onclick="openEditModal('${p.id}')">✏️</button>
@@ -561,29 +733,24 @@ function renderList() {
   }).join('');
 }
 
-/* ══════════════════════════════════════
-   MODAL CONTROLS
-══════════════════════════════════════ */
+/* ── MODAL CONTROLS ── */
 function openAddModal() {
   editingId = null; draftId = null;
-  set('modal-title', '➕ Add Payment');
-  document.getElementById('f-name').value      = '';
-  document.getElementById('f-amount').value    = '';
+  set('modal-title','➕ Add Payment');
+  ['f-name','f-amount','f-notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-category').value  = 'Loan/EMI';
   document.getElementById('f-duedate').value   = today();
   document.getElementById('f-recurring').value = 'none';
-  document.getElementById('f-notes').value     = '';
   const stateEl = document.getElementById('form-save-state');
   if (stateEl) stateEl.textContent = '⏳ Start typing a name…';
   document.getElementById('add-modal').classList.add('open');
   setTimeout(() => document.getElementById('f-name').focus(), 120);
 }
-
 function openEditModal(id) {
   const p = payments.find(x => x.id === id);
   if (!p) return;
   editingId = id; draftId = null;
-  set('modal-title', '✏️ Edit Payment');
+  set('modal-title','✏️ Edit Payment');
   document.getElementById('f-name').value      = p.name;
   document.getElementById('f-amount').value    = p.amount;
   document.getElementById('f-category').value  = p.category;
@@ -594,40 +761,36 @@ function openEditModal(id) {
   if (stateEl) stateEl.innerHTML = '<span style="color:var(--green)">🟢 Saved!</span>';
   document.getElementById('add-modal').classList.add('open');
 }
-
 function closeAddModal() {
-  // Remove empty drafts (name still blank when closed)
   if (draftId) {
     const rec = payments.find(p => p.id === draftId);
-    if (rec && !rec.name.trim()) {
-      payments = payments.filter(p => p.id !== draftId);
-      renderAll();
-    }
+    if (rec && !rec.name.trim()) { payments = payments.filter(p => p.id !== draftId); renderAll(); }
   }
   document.getElementById('add-modal').classList.remove('open');
   editingId = null; draftId = null;
 }
-
 function openPaidModal(id) {
   markingPaidId = id;
   const p = payments.find(x => x.id === id);
-  document.getElementById('p-method').value = p && p.paidMethod ? p.paidMethod : 'UPI';
-  document.getElementById('p-date').value   = p && p.paidDate   ? p.paidDate   : today();
-  document.getElementById('p-ref').value    = p && p.paidRef    ? p.paidRef    : '';
+  if (!p) return;
+  originalStatus = p.status === 'paid' ? 'pending' : p.status;
+  document.getElementById('p-method').value = p.paidMethod || 'UPI';
+  document.getElementById('p-date').value   = p.paidDate   || today();
+  document.getElementById('p-ref').value    = p.paidRef    || '';
+  document.getElementById('p-partial-amount').value = '';
+  refreshPaidModalSummary();
   document.getElementById('paid-modal').classList.add('open');
-  // Auto-trigger save so selecting the modal itself marks it paid
-  autoSavePaid();
+  const defaultType = (p.partialPayments && p.partialPayments.length > 0) ? 'partial' : 'full';
+  payType = defaultType === 'full' ? 'partial' : 'full';
+  setPayType(defaultType);
 }
-
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
 function delPayment(id) {
   if (!confirm('Delete this payment?')) return;
   payments = payments.filter(p => p.id !== id);
   persist(); renderAll();
-  showToast('🗑️', 'Deleted', false);
+  showToast('🗑️','Deleted',false);
 }
-
 function setFilter(f, btn) {
   currentFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -635,41 +798,19 @@ function setFilter(f, btn) {
   renderList();
 }
 
-/* ══════════════════════════════════════
-   HELPERS
-══════════════════════════════════════ */
-function getStatus(p) {
-  if (p.status === 'paid') return 'paid';
-  const t = new Date(); t.setHours(0,0,0,0);
-  return new Date(p.dueDate + 'T00:00:00') < t ? 'overdue' : 'pending';
-}
-function fmt(n)     { return '₹' + Number(n).toLocaleString('en-IN'); }
-function fmtDate(s) { if (!s) return '—'; return new Date(s + 'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
-function today()    { return new Date().toISOString().split('T')[0]; }
-function uid()      { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function esc(s)     { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function set(id,v)  { const el=document.getElementById(id); if(el) el.textContent=v; }
-
-function showToast(icon, msg, success) {
-  const t = document.getElementById('toast');
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-msg').textContent  = msg;
-  t.className = 'toast show' + (success ? ' success' : '');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
+/* ── SAMPLE DATA ── */
 function sampleData() {
   const f = n => { const d=new Date(); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0]; };
   const p = n => { const d=new Date(); d.setDate(d.getDate()-n); return d.toISOString().split('T')[0]; };
   return [
-    { id:uid(), name:'Home Loan EMI',   amount:32000, category:'Loan/EMI',      dueDate:f(5),  recurring:'monthly',  status:'pending', notes:'Federal Bank',          paidMethod:null, paidDate:null, paidRef:null },
-    { id:uid(), name:'Cement Bill',     amount:85000, category:'Material',       dueDate:f(2),  recurring:'none',     status:'pending', notes:'Shri Ram Cement Store', paidMethod:null, paidDate:null, paidRef:null },
-    { id:uid(), name:'Labour Payment',  amount:45000, category:'Labour',         dueDate:p(3),  recurring:'monthly',  status:'overdue', notes:'Site A workers',        paidMethod:null, paidDate:null, paidRef:null },
-    { id:uid(), name:'Electricity Bill',amount:2200,  category:'Utility',        dueDate:p(10), recurring:'monthly',  status:'paid',    notes:'',                      paidMethod:'UPI', paidDate:p(11), paidRef:'UTR9876543210' },
+    { id:uid(), name:'Home Loan EMI',    amount:32000, category:'Loan/EMI', dueDate:f(5),  recurring:'monthly', status:'pending', notes:'Federal Bank',          paidMethod:null, paidDate:null, paidRef:null, partialPayments:[] },
+    { id:uid(), name:'Cement Bill',      amount:85000, category:'Material', dueDate:f(2),  recurring:'none',    status:'pending', notes:'Shri Ram Cement Store', paidMethod:null, paidDate:null, paidRef:null,
+      partialPayments:[{ id:uid(), amount:40000, method:'UPI', date:p(1), ref:'UTR1234567890' },{ id:uid(), amount:20000, method:'Cash', date:p(0), ref:'' }] },
+    { id:uid(), name:'Labour Payment',   amount:45000, category:'Labour',   dueDate:p(3),  recurring:'monthly', status:'pending', notes:'Site A workers',        paidMethod:null, paidDate:null, paidRef:null, partialPayments:[] },
+    { id:uid(), name:'Electricity Bill', amount:2200,  category:'Utility',  dueDate:p(10), recurring:'monthly', status:'paid',    notes:'',                      paidMethod:'UPI', paidDate:p(11), paidRef:'UTR9876543210', partialPayments:[] },
   ];
 }
 
-/* Close modal on overlay click */
 document.querySelectorAll('.modal-overlay').forEach(o =>
   o.addEventListener('click', e => {
     if (e.target !== o) return;
